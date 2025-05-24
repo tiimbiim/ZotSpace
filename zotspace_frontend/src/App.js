@@ -6,6 +6,21 @@ import './App.css';
 import Login from './pages/Login';
 import Schedule from './pages/Schedule';
 import StudyGroup from './pages/StudyGroup';
+import axios from 'axios';
+
+
+// const axios = require('axios').default;
+
+const options = {method: 'GET', url: 'https://anteaterapi.com/v2/rest/studyRooms'};
+let api_data = null;
+try {
+  const { data } = await axios.request(options);
+  api_data = data;
+  console.log(api_data)
+
+} catch (error) {
+  console.error(error);
+}
 
 // Protected Route component
 function ProtectedRoute({ children }) {
@@ -51,6 +66,7 @@ function Home() {
       console.error('Error signing out:', error);
     }
   };
+
 
   return (
     <div className="App">
