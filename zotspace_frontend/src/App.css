@@ -39,6 +39,8 @@
   display: flex;
   gap: 2rem;
   margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .action-button {
@@ -51,6 +53,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: bold;
+  min-width: 200px;
 }
 
 .action-button:hover {
@@ -62,6 +65,15 @@
 .action-button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
 }
 
 .App-link {

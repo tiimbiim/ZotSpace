@@ -1,8 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 import './App.css';
+import Login from './pages/Login';
 import Schedule from './pages/Schedule';
 import StudyGroup from './pages/StudyGroup';
+
+// Protected Route component
+function ProtectedRoute({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+}
 
 function Home() {
   const navigate = useNavigate();
@@ -13,6 +41,15 @@ function Home() {
 
   const handleFindStudyGroup = () => {
     navigate('/study-group');
+  };
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
   return (
@@ -33,6 +70,12 @@ function Home() {
           >
             Find Study Group
           </button>
+          <button 
+            className="action-button logout-button"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </header>
     </div>
@@ -43,9 +86,31 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/schedule" element={<Schedule />} />
-        <Route path="/study-group" element={<StudyGroup />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/schedule"
+          element={
+            <ProtectedRoute>
+              <Schedule />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/study-group"
+          element={
+            <ProtectedRoute>
+              <StudyGroup />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
