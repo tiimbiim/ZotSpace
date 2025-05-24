@@ -1,24 +1,53 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+import Schedule from './pages/Schedule';
+import StudyGroup from './pages/StudyGroup';
 
-function App() {
+function Home() {
+  const navigate = useNavigate();
+
+  const handleSchedule = () => {
+    navigate('/schedule');
+  };
+
+  const handleFindStudyGroup = () => {
+    navigate('/study-group');
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Welcome to ZotSpace</h1>
+        <p>Your Ultimate Study Space Management Solution</p>
+        <div className="button-container">
+          <button 
+            className="action-button"
+            onClick={handleSchedule}
+          >
+            Schedule
+          </button>
+          <button 
+            className="action-button"
+            onClick={handleFindStudyGroup}
+          >
+            Find Study Group
+          </button>
+        </div>
       </header>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/study-group" element={<StudyGroup />} />
+      </Routes>
+    </Router>
   );
 }
 
