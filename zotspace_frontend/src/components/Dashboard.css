@@ -1,0 +1,96 @@
+.dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard h1 {
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.widget {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.widget:hover {
+  transform: translateY(-5px);
+}
+
+.difficulty-meter {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+  height: max-content;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: -1.5rem;
+}
+
+.course-schedule {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.requirements {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  margin-top: -3rem;
+}
+
+.todo-list {
+  grid-column: span 1;
+}
+
+.calendar {
+  grid-column: 2 / span 2;
+}
+
+.study-rooms {
+  grid-column: span 3;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .course-schedule,
+  .difficulty-meter,
+  .requirements,
+  .todo-list,
+  .calendar,
+  .study-rooms {
+    grid-column: span 2;
+    margin: 0;
+  }
+
+  .course-schedule {
+    grid-row: auto;
+  }
+
+  .difficulty-meter {
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .widget {
+    grid-column: span 1;
+  }
+} 
