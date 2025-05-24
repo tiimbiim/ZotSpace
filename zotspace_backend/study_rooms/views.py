@@ -1,7 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 from .models import StudyRoom, StudyRoomSlot
 from .serializers import StudyRoomSerializer, CreateStudyRoomSerializer
@@ -9,8 +8,8 @@ import requests
 from datetime import datetime
 
 class StudyRoomViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
     serializer_class = StudyRoomSerializer
+    queryset = StudyRoom.objects.all()
 
     def get_queryset(self):
         queryset = StudyRoom.objects.all()
@@ -35,50 +34,6 @@ class StudyRoomViewSet(viewsets.ModelViewSet):
             return CreateStudyRoomSerializer
         return StudyRoomSerializer
 
-    @action(detail=True, methods=['post'])
-    def join(self, request, pk=None):
-        study_room = self.get_object()
-        
-        # Check if room is full
-        if study_room.participants.count() >= study_room.capacity:
-            return Response(
-                {'error': 'Study room is at full capacity'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        # Add user to participants
-        study_room.participants.add(request.user)
-        return Response({'status': 'joined study room'})
-
-    @action(detail=True, methods=['post'])
-    def leave(self, request, pk=None):
-        study_room = self.get_object()
-        study_room.participants.remove(request.user)
-        return Response({'status': 'left study room'})
-
-    @action(detail=True, methods=['post'])
-    def book_slot(self, request, pk=None):
-        study_room = self.get_object()
-        slot_id = request.data.get('slot_id')
-        
-        try:
-            slot = study_room.slots.get(id=slot_id)
-            if not slot.is_available:
-                return Response(
-                    {'error': 'Slot is not available'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            slot.is_available = False
-            slot.save()
-            return Response({'status': 'slot booked'})
-            
-        except StudyRoomSlot.DoesNotExist:
-            return Response(
-                {'error': 'Slot not found'},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
 @api_view(['GET'])
 def get_all_available_study_rooms(request):
     """
@@ -87,14 +42,16 @@ def get_all_available_study_rooms(request):
     - date: YYYY-MM-DD format (default: today)
     - start_time: HH:MM format
     - end_time: HH:MM format
-    - capacity: minimum capacity required
-    - location: location name to filter by
+    - min_capacity: minimum capacity required
+    - max_capacity: maximum capacity required
+    - location: location name to filter by (e.g., "Science Library", "Multimedia Resources Center")
     """
     # Get query parameters
     date = request.query_params.get('date', datetime.now().strftime('%Y-%m-%d'))
     start_time = request.query_params.get('start_time')
     end_time = request.query_params.get('end_time')
-    capacity = request.query_params.get('capacity')
+    min_capacity = request.query_params.get('min_capacity')
+    max_capacity = request.query_params.get('max_capacity')
     location = request.query_params.get('location')
 
     # Make request to external API
@@ -104,28 +61,68 @@ def get_all_available_study_rooms(request):
         response.raise_for_status()
         rooms = response.json().get('data', [])
 
+        # First, filter out rooms with no available slots
+        rooms = [
+            room for room in rooms
+            if any(slot.get('isAvailable', False) for slot in room.get('slots', []))
+        ]
+
         # Apply filters
         filtered_rooms = rooms
-        if start_time and end_time:
+
+        # Filter by capacity
+        if min_capacity:
             filtered_rooms = [
                 room for room in filtered_rooms
-                if any(
-                    slot['start'] >= start_time and slot['end'] <= end_time
-                    for slot in room.get('slots', [])
-                )
-            ]
-        
-        if capacity:
-            filtered_rooms = [
-                room for room in filtered_rooms
-                if room.get('capacity', 0) >= int(capacity)
+                if room.get('capacity', 0) >= int(min_capacity)
             ]
 
-        if location:
+        if max_capacity:
             filtered_rooms = [
                 room for room in filtered_rooms
-                if location.lower() in room.get('location', '').lower()
+                if room.get('capacity', 0) <= int(max_capacity)
             ]
+
+        # Filter by location
+        if location:
+            location = location.lower()
+            filtered_rooms = [
+                room for room in filtered_rooms
+                if (
+                    # Check exact location match
+                    location == room.get('location', '').lower() or
+                    # Special case for Science Library
+                    (location == 'science library' and 
+                     'science library' in room.get('description', '').lower())
+                )
+            ]
+
+        # Filter by available slots in time range
+        if start_time and end_time:
+            # Convert time strings to datetime objects for comparison
+            start_dt = datetime.strptime(f"{date} {start_time}", "%Y-%m-%d %H:%M")
+            end_dt = datetime.strptime(f"{date} {end_time}", "%Y-%m-%d %H:%M")
+            
+            filtered_rooms = []
+            for room in rooms:
+                available_slots = [
+                    slot for slot in room.get('slots', [])
+                    if slot.get('isAvailable', False)
+                ]
+                
+                # Check if any available slot overlaps with requested time range
+                has_available_slot = False
+                for slot in available_slots:
+                    slot_start = datetime.fromisoformat(slot['start'].replace('Z', '+00:00'))
+                    slot_end = datetime.fromisoformat(slot['end'].replace('Z', '+00:00'))
+                    
+                    # Check if slot overlaps with requested time range
+                    if (slot_start <= end_dt and slot_end >= start_dt):
+                        has_available_slot = True
+                        break
+                
+                if has_available_slot:
+                    filtered_rooms.append(room)
 
         return Response(filtered_rooms)
 
