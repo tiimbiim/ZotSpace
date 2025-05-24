@@ -30,6 +30,7 @@ function Login() {
   };
 
   return (
+    
     <div className="login-container">
       <div className="login-box">
         <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
