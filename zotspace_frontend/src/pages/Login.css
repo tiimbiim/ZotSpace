@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
-  background-image: url('../../public/space_stars.jpg');
+  background-image: url('../../public/space_home.jpg');
   background-size: cover;
 
 }
@@ -86,7 +86,7 @@
 .toggle-button {
   background: none;
   border: none;
-  color: #61dafb;
+  color: #1d161e;
   cursor: pointer;
   font-weight: bold;
   padding: 0;
