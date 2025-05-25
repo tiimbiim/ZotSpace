@@ -1,9 +1,9 @@
 .study-spaces-page {
   padding: 2rem;
-  max-width: 1400px;
+  max-width: 100vw;
   margin: 0 auto;
   min-height: 100vh;
-  background: url('../assets/nav_background.jpg') no-repeat center center fixed;
+  background: url('../assets/nav_background.png') no-repeat center center fixed;
   background-size: cover;
 }
 

@@ -11,7 +11,7 @@ import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
 import StudyTimer from './widgets/StudyTimer';
 import ScheduleContainer from './widgets/ScheduleContainer';
-import backgroundImage from '../assets/dash_background.jpg';
+import backgroundImage from '../assets/dash_background.png';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})`, maxWidth: '100vw'}}>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
       <h1>ZotSpace Dashboard</h1>
       <h2 className="subtitle">Organize your world, the <i>ZOT</i> way. </h2>
@@ -43,8 +43,8 @@ const Dashboard = () => {
           <div className="widget-header" onClick={handleCourseScheduleClick} style={{ cursor: 'pointer' }}>
             <h2>Course Schedule</h2>
           </div>
-          {/* <CourseSchedule /> */}
-          <ScheduleContainer />
+          <CourseSchedule />
+          {/* <ScheduleContainer /> */}
         </div>
         <div className="widget difficulty-meter">
           <DifficultyMeter />

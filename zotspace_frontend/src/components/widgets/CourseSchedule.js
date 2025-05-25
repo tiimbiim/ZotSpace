@@ -1,100 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Widgets.css';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState } from 'react';
-import axios from 'axios'
+import { auth } from '../../firebase.config';
+import axios from 'axios';
 
-// const auth = getAuth();
-// let user_email = null
-// let user_uid = null
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     const email = user.email;
-//     user_email = email
-//     console.log(email)
-//     getUserId(email).then(uid => {
-//       console.log('real', uid)
-//       user_uid = uid
-//     });
-//   } else {
-//     console.log("User not logged in")
-//   }
-// })
-
-// const getUserId = async (email) => {
-//     const response = await fetch(`http://localhost:8000/api/users/get-id/?email=${email}`);
-//     const data = await response.text();
-//     let json_data = JSON.parse(data)
-//     console.log(json_data)
-//     console.log(json_data["user_id"], json_data["email"])
-//     return json_data["user_id"]
-// };
-// const getDataByUserId = async (uid) => {
-//   const response = await fetch(`http://localhost:8000/api/users/${uid}/courses/`);
-//   const text = await response.text();
-//   const data = JSON.parse(text);
-//   return data; // Assuming this is an array
-// };
-
-// 
-console.log("COURSESCHEDULE")
-const CourseSchedule = ({ courses = [], userId }) => {
-  console.log('cs', courses)
-  const safeCourses = Array.isArray(courses) ? courses : [];  
-  const [inputValue, setInputValue] = useState('');
-
-  console.log('safe courses', safeCourses)
+const CourseSchedule = () => {
+  const [userId, setUserId] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  const timeSlots = Array.from({ length: 15 }, (_, i) => i + 8);
+  const timeSlots = Array.from({ length: 15 }, (_, i) => i + 8); // 8AM to 10PM
+
+  useEffect(() => {
+    const fetchUserAndCourses = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+
+        const email = user.email;
+        const { data: userIdData } = await axios.get(
+          `http://localhost:8000/api/users/get-id/?email=${email}`
+        );
+        const currentUserId = userIdData.user_id;
+        setUserId(currentUserId);
+
+        const { data: coursesData } = await axios.get(
+          `http://localhost:8000/api/users/${currentUserId}/courses/`
+        );
+
+        const colorPalette = ['#a4d4ae', '#ffcc80', '#90caf9', '#f48fb1', '#ce93d8', '#80cbc4'];
+        const coloredCourses = coursesData.courses.map((course, i) => {
+          const [courseId, day, startTime, endTime] = course;
+          return {
+            name: courseId,
+            day,
+            startTime,
+            endTime,
+            color: colorPalette[i % colorPalette.length],
+          };
+        });
+
+        setCourses(coloredCourses);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching schedule:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndCourses();
+  }, []);
 
   const getCourseForTimeSlot = (day, time) => {
-    
-    return safeCourses.find(course =>
+    return courses.find(course =>
       course.day === day &&
       time >= course.startTime &&
       time < course.endTime
     );
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
-
-    try {
-
-      const response = await axios.post(`http://localhost:8000/api/users/${userId}/courses/add/`, {course_id: inputValue});
-
-      if (response.ok) {
-        console.log('Submitted successfully');
-        setInputValue('');
-      } else {
-        console.error('Submission failed:', response.status);
-      }
-    } catch (error) {
-      console.error('Error during submission:', error);
-    }
-  };
+  if (loading) return <div>Loading schedule...</div>;
+  if (!userId) return <div>Please log in to see your schedule.</div>;
+  if (courses.length === 0) return <div>No courses scheduled.</div>;
 
   return (
-
-    
-
-
     <div className="course-schedule-widget">
-      <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter a message"
-        />
-        <button type="submit">Submit</button>
-      </form>
       <div className="schedule-grid">
         <div className="time-column">
           <div className="header-cell"></div>
