@@ -26,6 +26,7 @@ urlpatterns = [
     # User endpoints
     path('api/users/check-email/', user_views.check_email_exists),
     path('api/users/create/', user_views.create_user),
+    path('api/users/get-id/', user_views.get_user_id_by_email),
     path('api/users/<int:user_id>/courses/', user_views.get_courses),
     path('api/users/<int:user_id>/bookings/', user_views.get_bookings),
     path('api/users/<int:user_id>/courses/add/', user_views.add_course),
