@@ -24,13 +24,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # User endpoints
+    path('api/users/check-email/', user_views.check_email_exists),
+    path('api/users/create/', user_views.create_user),
     path('api/users/<int:user_id>/courses/', user_views.get_courses),
     path('api/users/<int:user_id>/bookings/', user_views.get_bookings),
     path('api/users/<int:user_id>/courses/add/', user_views.add_course),
     path('api/users/<int:user_id>/courses/remove/', user_views.remove_course),
     
     # Study Group endpoints
+    path('api/study-groups/create/', study_group_views.create_study_group),
     path('api/study-groups/<int:group_id>/', study_group_views.get_study_group),
+    path('api/study-groups/<int:group_id>/delete/', study_group_views.delete_study_group),
     path('api/study-groups/', study_group_views.get_all_study_groups),
     path('api/study-groups/available/', study_group_views.get_all_available_study_groups),
     
