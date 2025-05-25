@@ -1,6 +1,10 @@
 import React from 'react';
 import './Widgets.css';
 
+
+
+
+
 const Requirements = () => {
   // Replace with actual requirement data
   const requirements = [
