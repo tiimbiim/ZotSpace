@@ -83,21 +83,21 @@
 }
 
 .todo-list {
-  grid-column: span 1;
+  grid-column: 1 / span 2;
   max-height: 450px;
 }
 
-.calendar {
+/* .calendar {
   grid-column: 2 / span 2;
   max-height: 450px;
-}
+} */
 
 .study-rooms {
   grid-column: span 3;
 }
 
 .widget.study-timer {
-  grid-column: span 2;
+  grid-column: 3;
   display: flex;
   flex-direction: column;
 }
