@@ -1,43 +1,34 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTasks } from '../../hooks/useTasks';
 import './Widgets.css';
 
 const TodoList = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Complete CS 161 Project', completed: false, category: 'Assignments', dueDate: '2024-03-20' },
-    { id: 2, text: 'Study for ICS 139W Midterm', completed: false, category: 'Exams', dueDate: '2024-03-15' },
-    { id: 3, text: 'Go to the gym', completed: true, category: 'Other', dueDate: '2024-03-10' },
-  ]);
-
+  const navigate = useNavigate();
+  const { tasks, addTask, toggleTask, deleteTask } = useTasks();
   const [newTask, setNewTask] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedDate, setSelectedDate] = useState('');
 
   const categories = ['All', 'Assignments', 'Exams', 'Other'];
 
-  const addTask = (e) => {
+  const navigateToTodoPage = () => {
+    navigate('/todos');
+  };
+
+  const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
 
-    const task = {
-      id: Date.now(),
+    addTask({
       text: newTask,
       completed: false,
       category: selectedCategory === 'All' ? 'Other' : selectedCategory,
       dueDate: selectedDate || new Date().toISOString().split('T')[0]
-    };
+    });
 
-    setTasks([...tasks, task]);
     setNewTask('');
-  };
-
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
-  };
-
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+    setSelectedDate('');
   };
 
   const getTopFourTasks = () => {
@@ -50,9 +41,9 @@ const TodoList = () => {
 
   return (
     <div className="todo-list-widget">
-      <h2>To-Do List</h2>
+      <h2 onClick={navigateToTodoPage}>To-Do List</h2>
       <div className="todo-controls">
-        <form onSubmit={addTask} className="add-task-form">
+        <form onSubmit={handleAddTask} className="add-task-form">
           <input
             type="text"
             value={newTask}
@@ -80,17 +71,6 @@ const TodoList = () => {
           </div>
           <button type="submit" className="add-button">Add</button>
         </form>
-      </div>
-      <div className="category-filters">
-        {categories.map(category => (
-          <button
-            key={category}
-            className={`category-filter ${selectedCategory === category ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
       </div>
       <div className="tasks-list">
         {getTopFourTasks().map(task => (

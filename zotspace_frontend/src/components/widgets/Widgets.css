@@ -586,3 +586,46 @@
   font-weight: bold;
   color: #333;
 }
+
+/* Todo Page Styles */
+.todo-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.todo-page h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.todo-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tasks-list.full-list {
+  max-height: none;
+  overflow: visible;
+}
+
+.tasks-list.full-list .task-item {
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.tasks-list.full-list .task-item:hover {
+  transform: translateX(4px);
+}
+
+/* Make the title in the widget clickable */
+.todo-list-widget h2 {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.todo-list-widget h2:hover {
+  color: #4CAF50;
+}

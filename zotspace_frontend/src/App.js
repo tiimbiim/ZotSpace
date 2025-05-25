@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Schedule from './pages/Schedule';
 import StudyGroup from './pages/StudyGroup';
 import CourseSched from './pages/CourseSched';
+import TodoPage from './pages/TodoPage';
 import axios from 'axios';
 
 import Dashboard from './components/Dashboard.js';
@@ -100,6 +101,14 @@ function App() {
             <ProtectedRoute>
               <Dashboard />
 {/* originally Home */}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/todos"
+          element={
+            <ProtectedRoute>
+              <TodoPage />
             </ProtectedRoute>
           }
         />
