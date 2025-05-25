@@ -31,12 +31,12 @@ const CourseSched = () => {
         let colorIndex = 0;
 
         const enrichedCourses = await Promise.all(
-          uniqueCourseData.map(async ([name, day, startTime, endTime]) => {
+          uniqueCourseData.map(async ([name, day, startTime, endTime, prof]) => {
             if (!courseColorMap[name]) {
               courseColorMap[name] = colorPalette[colorIndex % colorPalette.length];
               colorIndex++;
             }
-
+            console.log('NAME', name)
             const details = await getCourseDetails(name);
             return {
               name,
@@ -123,6 +123,8 @@ const CourseSched = () => {
       end_time: parseInt(formData.endTime),
       prof: formData.prof || 'tbd'
     };
+
+    console.log(newCourse)
 
     try {
       const response = await axios.post(`http://localhost:8000/api/users/${userId.current}/courses/add/`, newCourse);

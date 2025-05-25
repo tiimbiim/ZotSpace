@@ -78,7 +78,7 @@ const CourseSchedule = () => {
           ))}
         </div>
         {daysOfWeek.map(day => (
-          <div key={day} className="day-column">
+          <div key={day} className="day-column">+
             <div className="header-cell">{day}</div>
             {timeSlots.map(time => {
               const course = getCourseForTimeSlot(day, time);
