@@ -10,6 +10,7 @@ import DifficultyMeter from './widgets/DifficultyMeter';
 import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
 import StudyTimer from './widgets/StudyTimer';
+import ScheduleContainer from './widgets/ScheduleContainer';
 import backgroundImage from '../assets/dash_background.jpg';
 
 const Dashboard = () => {
@@ -42,7 +43,8 @@ const Dashboard = () => {
           <div className="widget-header" onClick={handleCourseScheduleClick} style={{ cursor: 'pointer' }}>
             <h2>Course Schedule</h2>
           </div>
-          <CourseSchedule />
+          {/* <CourseSchedule /> */}
+          <ScheduleContainer />
         </div>
         <div className="widget difficulty-meter">
           <DifficultyMeter />

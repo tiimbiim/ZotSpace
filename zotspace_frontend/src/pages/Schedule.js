@@ -4,15 +4,15 @@ import axios from 'axios';
 
 // const axios = require('axios').default;
 
-const options = {method: 'GET', url: 'https://anteaterapi.com/v2/rest/courses/COMPSCI161'};
-let api_data = null
-try {
-  const { data } = await axios.request(options);
-  api_data = data
-  console.log(api_data.data.id);
-} catch (error) {
-  console.error('api:', error);
-}
+// const options = {method: 'GET', url: 'https://anteaterapi.com/v2/rest/courses/COMPSCI161'};
+// let api_data = null
+// try {
+//   const { data } = await axios.request(options);
+//   api_data = data
+//   console.log(api_data.data.id);
+// } catch (error) {
+//   console.error('api:', error);
+// }
 
 function Schedule() {
 
@@ -22,7 +22,7 @@ function Schedule() {
       <header className="schedule-header">
         <h1>Schedule</h1>
         <p>Manage your study space bookings</p>
-        <p>{api_data.data.id}</p>
+        {/* <p>{api_data.data.id}</p> */}
       </header>
       <main className="schedule-content">
         <div className="calendar-container">
