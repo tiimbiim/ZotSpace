@@ -59,7 +59,7 @@ const StudyRooms = () => {
 
   const filteredSpaces = studySpaces.filter(space => {
     const locationMatch = selectedLocation === 'all' || space.location === selectedLocation;
-    const capacityMatch = selectedCapacity === 'all' || space.capacity === parseInt(selectedCapacity);
+    const capacityMatch = selectedCapacity === 'all' || space.capacity >= parseInt(selectedCapacity);
     const techMatch = techEnhanced === 'all' || 
       (techEnhanced === 'yes' && space.techEnhanced) || 
       (techEnhanced === 'no' && !space.techEnhanced);
