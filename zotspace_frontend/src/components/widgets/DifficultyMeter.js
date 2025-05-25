@@ -7,7 +7,7 @@ const DifficultyMeter = () => {
     { name: 'CS 161', difficulty: 85 },
     { name: 'ICS 139W', difficulty: 45 },
     { name: 'CS 122A', difficulty: 70 },
-    { name: 'CS 132', difficulty: 75 }
+    { name: 'CS 132', difficulty: 75 },
   ];
 
   return (
