@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTasks } from '../hooks/useTasks';
 import '../components/widgets/Widgets.css';
+import { useNavigate } from 'react-router-dom';
+import './TodoPage.css';
 
 const TodoPage = () => {
   const { tasks, addTask, toggleTask, deleteTask } = useTasks();
@@ -9,6 +11,8 @@ const TodoPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
 
   const categories = ['All', 'Assignments', 'Exams', 'Other'];
+  
+  const navigate = useNavigate();
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -40,7 +44,12 @@ const TodoPage = () => {
 
   return (
     <div className="todo-page">
-      <h1>To-Do List</h1>
+      <div className="header">
+        <h1>To-Do List</h1>
+        <button className="back-button" onClick={() => navigate('/')}>
+          Back to Dashboard
+        </button>
+      </div>
       <div className="todo-container">
         <div className="todo-controls">
           <form onSubmit={handleAddTask} className="add-task-form">
