@@ -5,14 +5,13 @@
   font-size: 1.5rem;
 }
 
-/* coursesched page */
-/* .widget-title {
+.widget-title {
   transition: color 0.2s ease;
 }
 
 .widget-title:hover {
   color: #1976d2;
-} */
+}
 
 /* Course Schedule Styles */
 .course-schedule-widget {

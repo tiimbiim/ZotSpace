@@ -44,26 +44,6 @@
   background-color: #d32f2f;
 }
 
-/* course sched */
-.widget-header {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e0e0e0;
-  transition: all 0.2s ease;
-  user-select: none;
-}
-/* course sched */
-.widget-header:hover {
-  color: #0f3a65;
-  border-bottom-color: #0f3a65;
-}
-/* course sched */
-.widget-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -120,6 +100,17 @@
   grid-column: span 2;
   display: flex;
   flex-direction: column;
+}
+
+
+/* course sched */
+.widget-header h2 {
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.widget-header:hover h2 {
+  color: #4CAF50;
 }
 
 @media (max-width: 1024px) {
