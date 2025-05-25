@@ -44,6 +44,26 @@
   background-color: #d32f2f;
 }
 
+/* course sched */
+.widget-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+/* course sched */
+.widget-header:hover {
+  color: #0f3a65;
+  border-bottom-color: #0f3a65;
+}
+/* course sched */
+.widget-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -84,10 +104,12 @@
 
 .todo-list {
   grid-column: span 1;
+  max-height: 450px;
 }
 
 .calendar {
   grid-column: 2 / span 2;
+  max-height: 450px;
 }
 
 .study-rooms {

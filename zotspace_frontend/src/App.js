@@ -6,6 +6,7 @@ import './App.css';
 import Login from './pages/Login';
 import Schedule from './pages/Schedule';
 import StudyGroup from './pages/StudyGroup';
+import CourseSched from './pages/CourseSched';
 import axios from 'axios';
 
 import Dashboard from './components/Dashboard.js';
@@ -99,6 +100,14 @@ function App() {
             <ProtectedRoute>
               <Dashboard />
 {/* originally Home */}
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/course-schedule"
+          element={
+            <ProtectedRoute>
+              <CourseSched />
             </ProtectedRoute>
           }
         />

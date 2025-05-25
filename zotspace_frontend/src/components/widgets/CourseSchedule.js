@@ -3,7 +3,7 @@ import './Widgets.css';
 
 const CourseSchedule = () => {
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  const timeSlots = Array.from({ length: 14 }, (_, i) => i + 9); 
+  const timeSlots = Array.from({ length: 15 }, (_, i) => i + 8); 
 
   // Replace with actual courses
   const courses = [
@@ -22,7 +22,6 @@ const CourseSchedule = () => {
 
   return (
     <div className="course-schedule-widget">
-      <h2>Course Schedule</h2>
       <div className="schedule-grid">
         <div className="time-column">
           <div className="header-cell"></div>

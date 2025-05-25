@@ -24,6 +24,10 @@ const Dashboard = () => {
     }
   };
 
+  const handleCourseScheduleClick = () => {
+    navigate('/course-schedule');
+  };
+
   return (
     <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
@@ -31,6 +35,9 @@ const Dashboard = () => {
       <h2 className="subtitle">Organize your world, the <i>ZOT</i> way. </h2>
       <div className="dashboard-grid">
         <div className="widget course-schedule">
+          <div className="widget-header" onClick={handleCourseScheduleClick} style={{ cursor: 'pointer' }}>
+            <h2>Course Schedule</h2>
+          </div>
           <CourseSchedule />
         </div>
         <div className="widget difficulty-meter">

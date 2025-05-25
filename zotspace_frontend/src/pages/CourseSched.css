@@ -1,0 +1,161 @@
+.course-schedule-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #1565c0;
+}
+
+.header h1 {
+  margin-bottom: 2rem;
+  font-size: 2.4rem;
+  color: #333;
+  font-weight: 565;
+}
+
+.schedule-container {
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.schedule-grid {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.time-column {
+  min-width: 100px;
+}
+
+.day-column {
+  flex: 1;
+  min-width: 120px;
+}
+
+.header-cell {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+}
+
+.time-cell {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #eee;
+  color: #666;
+}
+
+.schedule-cell {
+  height: 60px;
+  border-bottom: 1px solid #eee;
+  border-left: 1px solid #eee;
+  padding: 0.5rem;
+}
+
+.has-course {
+  position: relative;
+}
+
+.course-details {
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+.course-name {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.course-location {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.course-list {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-list h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.course-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.course-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.course-card p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+@media (max-width: 1024px) {
+  .schedule-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .schedule-grid {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .course-schedule-page {
+    padding: 1rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .back-button {
+    margin-bottom: 1rem;
+  }
+}
