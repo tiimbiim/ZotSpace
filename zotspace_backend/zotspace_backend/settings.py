@@ -39,15 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps
     'rest_framework',
+    'corsheaders',
     # Local apps
     'users',
     'study_groups',
     'study_rooms',
+    'todos',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -134,3 +137,15 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+# Add these CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # For development only
+CORS_ALLOW_CREDENTIALS = True
+
+# If you want to specify allowed origins instead of allowing all:
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # React default port
+#     "http://127.0.0.1:3000",
+#     "http://localhost:5173",  # Vite default port
+#     "http://127.0.0.1:5173",
+# ]

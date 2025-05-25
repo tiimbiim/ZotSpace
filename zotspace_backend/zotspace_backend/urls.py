@@ -40,4 +40,7 @@ urlpatterns = [
     
     # Study Room endpoints
     path('api/study-rooms/', include('study_rooms.urls')),  # Include study_rooms URLs
+    
+    # Todo endpoints
+    path('api/', include('todos.urls')),  # Include todos URLs
 ]

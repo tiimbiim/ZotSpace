@@ -186,4 +186,29 @@ def check_email_exists(request):
     return Response({
         'email': email,
         'exists': exists
-    }) 
+    })
+
+@api_view(['GET'])
+def get_user_id_by_email(request):
+    """
+    Get a user's ID by their email address
+    """
+    email = request.query_params.get('email')
+    
+    if not email:
+        return Response(
+            {'error': 'Email parameter is required'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    try:
+        user = User.objects.get(email=email)
+        return Response({
+            'user_id': user.id,
+            'email': user.email
+        })
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found'},
+            status=status.HTTP_404_NOT_FOUND
+        ) 
