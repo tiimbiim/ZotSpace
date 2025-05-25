@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django.utils import timezone
 
 class StudyGroup(models.Model):
     GROUP_STATUS = [
@@ -20,9 +21,9 @@ class StudyGroup(models.Model):
     is_active = models.BooleanField(default=True)
     
     # New fields
-    description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    description = models.TextField(blank=True, null=True)  # Allow null for existing data
+    start_time = models.DateTimeField(null=True, blank=True)  # Allow null for existing data
+    end_time = models.DateTimeField(null=True, blank=True)  # Allow null for existing data
     status = models.CharField(max_length=20, choices=GROUP_STATUS, default='OPEN')
     tags = models.JSONField(default=list, blank=True)  # For storing course_id and other tags
 
