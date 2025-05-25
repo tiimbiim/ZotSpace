@@ -87,6 +87,12 @@
   grid-column: span 3;
 }
 
+.widget.study-timer {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);

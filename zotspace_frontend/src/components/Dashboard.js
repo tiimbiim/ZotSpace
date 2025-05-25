@@ -9,7 +9,7 @@ import Requirements from './widgets/Requirements';
 import DifficultyMeter from './widgets/DifficultyMeter';
 import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
-import CalendarWidget from './widgets/Calendar';
+import StudyTimer from './widgets/StudyTimer';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const Dashboard = () => {
         <div className="widget todo-list">
           <TodoList />
         </div>
-        <div className="widget calendar">
-          <CalendarWidget />
+        <div className="widget study-timer">
+          <StudyTimer />
         </div>
         <div className="widget study-rooms">
           <StudyRooms />
