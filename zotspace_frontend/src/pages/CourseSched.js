@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CourseSched.css';
-import backgroundImage from '../assets/dash_background.jpg';
+import backgroundImage from '../assets/nav_background.jpg';
 
 const CourseSched = () => {
   const navigate = useNavigate();
