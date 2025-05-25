@@ -10,6 +10,7 @@ import DifficultyMeter from './widgets/DifficultyMeter';
 import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
 import StudyTimer from './widgets/StudyTimer';
+import backgroundImage from '../assets/dash_background.jpg';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
       <h1>ZotSpace Dashboard</h1>
       <h2 className="subtitle">Organize your world, the <i>ZOT</i> way. </h2>
