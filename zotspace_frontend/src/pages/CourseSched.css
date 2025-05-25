@@ -32,14 +32,14 @@
 
 .header h1 {
   margin-bottom: 2rem;
-  font-size: 2.3rem;
+  font-size: 2.35rem;
   color: #333;
-  font-weight: 560;
+  font-weight: 570;
 }
 
 .schedule-container {
   display: grid;
-  grid-template-columns: 1fr 450px;
+  grid-template-columns: 1fr 300px;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -100,7 +100,7 @@
   margin-bottom: 0.2rem;
 }
 
-.course-location {
+.course-location, .course-type {
   font-size: 0.75rem;
   color: rgba(0, 0, 0, 0.7);
 }
