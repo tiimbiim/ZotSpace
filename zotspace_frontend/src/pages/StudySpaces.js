@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StudySpaces.css';
 import backgroundImage from '../assets/nav_background.jpg';
@@ -9,6 +9,50 @@ const StudySpaces = () => {
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedCapacity, setSelectedCapacity] = useState('all');
   const [techEnhanced, setTechEnhanced] = useState('all');
+  const [studyGroups, setStudyGroups] = useState([
+    {
+      id: 1,
+      name: "CS 143 Study Group",
+      course: "CS 143",
+      members: 4,
+      maxMembers: 6,
+      meetingTime: "Monday, 2:00 PM",
+      location: "Science Library",
+      description: "Weekly study group for CS 143. We focus on algorithms and data structures."
+    },
+    {
+      id: 2,
+      name: "Math 2D Study Group",
+      course: "Math 2D",
+      members: 3,
+      maxMembers: 5,
+      meetingTime: "Wednesday, 3:00 PM",
+      location: "Gateway Study Center",
+      description: "Study group for Math 2D. We work on practice problems and review concepts."
+    }
+  ]);
+
+  useEffect(() => {
+    // Listen for messages from the confirmation window
+    const handleMessage = (event) => {
+      if (event.data.type === 'JOIN_GROUP_CONFIRMED') {
+        const groupId = event.data.groupId;
+        setStudyGroups(prevGroups => 
+          prevGroups.map(group => 
+            group.id === groupId 
+              ? { ...group, members: group.members + 1 }
+              : group
+          )
+        );
+      } else if (event.data.type === 'NEW_GROUP_CREATED') {
+        const newGroup = event.data.group;
+        setStudyGroups(prevGroups => [...prevGroups, newGroup]);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   const locations = [
     'Langson Library',
@@ -95,28 +139,17 @@ const StudySpaces = () => {
     return locationMatch && capacityMatch && techMatch;
   });
 
-  const studyGroups = [
-    {
-      id: 1,
-      name: "CS 143 Study Group",
-      course: "CS 143",
-      members: 4,
-      maxMembers: 6,
-      meetingTime: "Monday, 2:00 PM",
-      location: "Science Library",
-      description: "Weekly study group for CS 143. We focus on algorithms and data structures."
-    },
-    {
-      id: 2,
-      name: "Math 2D Study Group",
-      course: "Math 2D",
-      members: 3,
-      maxMembers: 5,
-      meetingTime: "Wednesday, 3:00 PM",
-      location: "Gateway Study Center",
-      description: "Study group for Math 2D. We work on practice problems and review concepts."
-    }
-  ];
+  const handleJoinClick = (group) => {
+    // Open confirmation in new tab with query parameters
+    const groupData = encodeURIComponent(JSON.stringify(group));
+    const confirmationUrl = `/join-group-confirmation?groupData=${groupData}`;
+    const confirmationWindow = window.open(confirmationUrl, '_blank', 'width=500,height=600');
+  };
+
+  const handleCreateGroup = () => {
+    // Open create group form in new tab
+    window.open('/create-group', '_blank', 'width=600,height=800');
+  };
 
   return (
     <div className="study-spaces-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
@@ -225,7 +258,9 @@ const StudySpaces = () => {
           <div className="groups-section">
             <div className="groups-header">
               <h2>Available Study Groups</h2>
-              <button className="create-group-btn">Create Study Group</button>
+              <button className="create-group-btn" onClick={handleCreateGroup}>
+                Create Study Group
+              </button>
             </div>
 
             <div className="groups-grid">
@@ -242,7 +277,13 @@ const StudySpaces = () => {
                     <p className="group-description">{group.description}</p>
                   </div>
                   <div className="group-actions">
-                    <button className="join-btn">Join Group</button>
+                    <button 
+                      className="join-btn" 
+                      onClick={() => handleJoinClick(group)}
+                      disabled={group.members >= group.maxMembers}
+                    >
+                      Join Group
+                    </button>
                   </div>
                 </div>
               ))}

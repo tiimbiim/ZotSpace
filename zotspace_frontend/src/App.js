@@ -9,6 +9,8 @@ import StudyGroup from './pages/StudyGroup';
 import CourseSched from './pages/CourseSched';
 import TodoPage from './pages/TodoPage';
 import StudySpaces from './pages/StudySpaces';
+import CreateGroupForm from './pages/CreateGroupForm';
+import JoinGroupConfirmation from './pages/JoinGroupConfirmation';
 import axios from 'axios';
 
 import Dashboard from './components/Dashboard.js';
@@ -145,6 +147,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/join-group-confirmation" element={<JoinGroupConfirmation />} />
+        <Route path="/create-group" element={<CreateGroupForm />} />
       </Routes>
     </Router>
   );
