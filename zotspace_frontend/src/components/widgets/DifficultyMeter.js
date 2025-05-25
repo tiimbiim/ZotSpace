@@ -33,4 +33,4 @@ const DifficultyMeter = () => {
   );
 };
 
-export default DifficultyMeter; 
+export default DifficultyMeter;

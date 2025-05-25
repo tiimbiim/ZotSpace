@@ -7,7 +7,7 @@
 
 /* Course Schedule Styles */
 .course-schedule-widget {
-  height: 100%;
+  height: 900px;
   overflow: auto;
 }
 
@@ -409,4 +409,4 @@
 .event-title {
   flex: 1;
   font-size: 0.9rem;
-} 
+}
