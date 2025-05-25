@@ -38,8 +38,6 @@ const StudyRooms = () => {
       features: [''],
       availableSlots: [
         { start: "1:00 PM", end: "1:30 PM" },
-        { start: "1:30 PM", end: "2:00 PM" },
-        { start: "2:00 PM", end: "2:30 PM" }
       ]
     },
     {
@@ -48,7 +46,7 @@ const StudyRooms = () => {
       location: "Langson Library",
       capacity: 6,
       techEnhanced: false,
-      features: [''],
+      features: ['Whiteboard'],
       availableSlots: [
         { start: "1:00 PM", end: "1:30 PM" },
         { start: "1:30 PM", end: "2:00 PM" },
@@ -56,16 +54,29 @@ const StudyRooms = () => {
       ]
     },
     {
-      id: "44697",
-      name: "Langson 382",
-      location: "Langson Library",
+      id: "44690",
+      name: "Science 530",
+      location: "Science Library",
       capacity: 6,
-      techEnhanced: false,
-      features: [''],
+      techEnhanced: true,
+      features: ['Digital Display'],
       availableSlots: [
-        { start: "1:00 PM", end: "1:30 PM" },
-        { start: "1:30 PM", end: "2:00 PM" },
-        { start: "2:00 PM", end: "2:30 PM" }
+        { start: "1:00 PM", end: "2:00 PM" },
+        { start: "3:00 PM", end: "3:30 PM" },
+        { start: "5:30 PM", end: "7:30 PM" },
+        { start: "9:00 PM", end: "10:00 PM" },
+      ]
+    },
+    {
+      id: "44706",
+      name: "Gateway 2103",
+      location: "Gateway Study Center",
+      capacity: 4,
+      techEnhanced: false,
+      features: ['Whiteboard'],
+      availableSlots: [
+        { start: "10:00 AM", end: "1:30 PM" },
+        { start: "4:30 PM", end: "6:00 PM" },
       ]
     }
   ];
