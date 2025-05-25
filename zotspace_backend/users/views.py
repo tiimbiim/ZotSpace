@@ -1,90 +1,189 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from .models import User
+from .serializers import UserSerializer
+from django.contrib.auth.hashers import make_password
+import re
+import requests
+
+def validate_course_format(course):
+    """
+    Validate that the course follows UCI format:
+    - Department code (2-4 letters) followed by course number (1-3 digits)
+    - Optional space between department and number
+    - Examples: CS141, ICS 33, MATH 2B
+    """
+    pattern = r'^[A-Z]{2,4}\s*\d{1,3}[A-Z]?$'
+    return bool(re.match(pattern, course))
+
+def validate_course_exists(course_id):
+    """
+    Validate that the course exists in the Anteater API
+    """
+    try:
+        response = requests.get(f'https://anteaterapi.com/v2/rest/courses/batch?ids={course_id}')
+        if response.status_code == 200:
+            data = response.json()
+            return data.get('ok', False) and len(data.get('data', [])) > 0
+        return False
+    except Exception:
+        return False
 
 @api_view(['GET'])
 def get_courses(request, user_id):
     """
     Get all courses for a specific user
     """
-    user = get_object_or_404(User, id=user_id)
-    return Response({'courses': user.courses})
+    try:
+        user = User.objects.get(id=user_id)
+        return Response({'courses': user.courses})
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
 @api_view(['GET'])
 def get_bookings(request, user_id):
     """
     Get all bookings for a specific user
     """
-    user = get_object_or_404(User, id=user_id)
-    return Response({'bookings': []})  # TODO: Implement booking retrieval
+    try:
+        user = User.objects.get(id=user_id)
+        return Response({'bookings': []})  # Placeholder for now
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
 @api_view(['POST'])
 def add_course(request, user_id):
     """
     Add a course to a user's course list
-    
-    Request Body:
-    {
-        "course_id": "string"  # Required: The ID of the course to add
-    }
-    
-    Returns:
-    - 200: Course added successfully
-    - 400: Missing course_id
-    - 404: User not found
+    Course must be a valid course ID from the Anteater API (e.g., COMPSCI161)
     """
-    user = get_object_or_404(User, id=user_id)
-    course_id = request.data.get('course_id')
-    
-    if not course_id:
+    try:
+        user = User.objects.get(id=user_id)
+        course_id = request.data.get('course_id')
+        
+        if not course_id:
+            return Response(
+                {'error': 'Course ID is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Validate course exists in Anteater API
+        if not validate_course_exists(course_id):
+            return Response(
+                {'error': 'Invalid course ID. Course not found in Anteater API'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if course_id not in user.courses:
+            user.courses.append(course_id)
+            user.save()
+            return Response({
+                'message': 'Course added successfully',
+                'course_id': course_id,
+                'updated_courses': user.courses
+            })
+        else:
+            return Response({
+                'message': 'Course already exists in user\'s list',
+                'course_id': course_id,
+                'courses': user.courses
+            })
+            
+    except User.DoesNotExist:
         return Response(
-            {'error': 'course_id is required'}, 
-            status=status.HTTP_400_BAD_REQUEST
+            {'error': 'User not found'},
+            status=status.HTTP_404_NOT_FOUND
         )
-    
-    # TODO: Implement course addition logic
-    # 1. Validate course_id exists
-    # 2. Check if user already has the course
-    # 3. Add course to user's course list
-    # 4. Save user
-    
-    return Response({
-        'message': 'Course added successfully',
-        'course_id': course_id
-    })
+    except Exception as e:
+        return Response(
+            {'error': f'Failed to add course: {str(e)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 @api_view(['POST'])
 def remove_course(request, user_id):
     """
     Remove a course from a user's course list
-    
-    Request Body:
-    {
-        "course_id": "string"  # Required: The ID of the course to remove
-    }
-    
-    Returns:
-    - 200: Course removed successfully
-    - 400: Missing course_id
-    - 404: User not found
     """
-    user = get_object_or_404(User, id=user_id)
-    course_id = request.data.get('course_id')
-    
-    if not course_id:
+    try:
+        user = User.objects.get(id=user_id)
+        course = request.data.get('course')
+        if not course:
+            return Response(
+                {'error': 'Course is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if course in user.courses:
+            user.courses.remove(course)
+            user.save()
+        
+        return Response({'message': 'Course removed successfully'})
+    except User.DoesNotExist:
         return Response(
-            {'error': 'course_id is required'}, 
+            {'error': 'User not found'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+@api_view(['POST'])
+def create_user(request):
+    """
+    Create a new user with their UCI email
+    """
+    try:
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not email or not password:
+            return Response(
+                {'error': 'Email and password are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Check if user already exists
+        if User.objects.filter(email=email).exists():
+            return Response(
+                {'error': 'User with this email already exists'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Create the user
+        user = User.objects.create_user(
+            email=email,
+            password=password
+        )
+
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response(
+            {'error': f'Failed to create user: {str(e)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+@api_view(['GET'])
+def check_email_exists(request):
+    """
+    Check if an email exists in the database
+    """
+    email = request.query_params.get('email')
+    
+    if not email:
+        return Response(
+            {'error': 'Email parameter is required'},
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # TODO: Implement course removal logic
-    # 1. Check if user has the course
-    # 2. Remove course from user's course list
-    # 3. Save user
-    
+    exists = User.objects.filter(email=email).exists()
     return Response({
-        'message': 'Course removed successfully',
-        'course_id': course_id
+        'email': email,
+        'exists': exists
     }) 
