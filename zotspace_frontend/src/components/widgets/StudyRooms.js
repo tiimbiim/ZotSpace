@@ -54,6 +54,19 @@ const StudyRooms = () => {
         { start: "1:30 PM", end: "2:00 PM" },
         { start: "2:00 PM", end: "2:30 PM" }
       ]
+    },
+    {
+      id: "44697",
+      name: "Langson 382",
+      location: "Langson Library",
+      capacity: 6,
+      techEnhanced: false,
+      features: [''],
+      availableSlots: [
+        { start: "1:00 PM", end: "1:30 PM" },
+        { start: "1:30 PM", end: "2:00 PM" },
+        { start: "2:00 PM", end: "2:30 PM" }
+      ]
     }
   ];
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StudySpaces.css';
+import backgroundImage from '../assets/nav_background.jpg';
 
 const StudySpaces = () => {
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ const StudySpaces = () => {
   ];
 
   return (
-    <div className="study-spaces-page">
+    <div className="study-spaces-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <header className="study-spaces-header">
         <div className="header-content">
           <h1>Study Spaces & Groups</h1>
