@@ -10,6 +10,7 @@ const TodoList = () => {
 
   const [newTask, setNewTask] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedDate, setSelectedDate] = useState('');
 
   const categories = ['All', 'Assignments', 'Exams', 'Other'];
 
@@ -22,7 +23,7 @@ const TodoList = () => {
       text: newTask,
       completed: false,
       category: selectedCategory === 'All' ? 'Other' : selectedCategory,
-      dueDate: new Date().toISOString().split('T')[0]
+      dueDate: selectedDate || new Date().toISOString().split('T')[0]
     };
 
     setTasks([...tasks, task]);
@@ -68,6 +69,15 @@ const TodoList = () => {
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
+          <div className="date-wrapper">
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="date-input"
+            />
+            <span className="calendar-icon">📅</span>
+          </div>
           <button type="submit" className="add-button">Add</button>
         </form>
       </div>
