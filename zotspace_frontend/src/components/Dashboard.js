@@ -56,7 +56,10 @@ const Dashboard = () => {
         <div className="widget study-timer">
           <StudyTimer />
         </div>
-        <div className="widget study-rooms" onClick={handleStudySpacesClick} style={{ cursor: 'pointer' }}>
+        <div className="widget study-rooms">
+          <div className="widget-header" onClick={handleStudySpacesClick} style={{ cursor: 'pointer' }}>
+            <h2>Study Rooms & Groups</h2>
+          </div>
           <StudyRooms />
         </div>
       </div>

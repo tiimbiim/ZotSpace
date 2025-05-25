@@ -69,8 +69,6 @@ const StudyRooms = () => {
 
   return (
     <div className="study-rooms-widget">
-      <h2>Study Spaces & Groups</h2>
-      
       <div className="filters-section">
         <div className="filter-group">
           <label>Location:</label>
