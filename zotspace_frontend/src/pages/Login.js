@@ -5,7 +5,6 @@ import { auth } from '../firebase.config.js';
 import './Login.css';
 import axios from 'axios';
 
-
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +18,6 @@ function Login() {
     setError('');
     
     let ve = email.includes("@uci.edu")
-    // console.log(email, email.includes("uci.edu"), ve)
 
     if (ve) {
       setValidEmail(true)
@@ -28,45 +26,74 @@ function Login() {
       setValidEmail(false)
     }
 
-
-
     try {
-      // alert(ve)
       if (ve) {
         if (isLogin) {
           // Sign in
-          await signInWithEmailAndPassword(auth, email, password);
-          
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          console.log('Firebase sign in successful:', userCredential.user);
+          navigate('/');
         } else {
           // Sign up
-          await createUserWithEmailAndPassword(auth, email, password);
-
-          // Create user in Django backend
           try {
+            // Extract username (netID) from email
+            const username = email.split('@')[0];
+            
+            // First create user in Django backend
             const response = await axios.post('http://localhost:8000/api/users/create/', {
               email: email,
-              password: password
+              password: password,
+              username: username
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              timeout: 5000
             });
             console.log('Backend user created:', response.data);
+
+            // Then create user in Firebase
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('Firebase user created:', userCredential.user);
+
+            // Sign in the user after successful creation
+            await signInWithEmailAndPassword(auth, email, password);
+            navigate('/');
           } catch (error) {
-            console.error('Backend API error:', error.response?.data || error.message);
-            // Optionally handle the error (e.g., show it to the user)
-            setError('Failed to create user in backend: ' + (error.response?.data?.error || error.message));
+            console.error('Error during signup:', error);
+            // If Firebase user was created but Django failed, we should clean up
+            if (error.response?.status === 400 && auth.currentUser) {
+              try {
+                await auth.currentUser.delete();
+                console.log('Cleaned up Firebase user after failed backend creation');
+              } catch (cleanupError) {
+                console.error('Error cleaning up Firebase user:', cleanupError);
+              }
+            }
+            
+            if (error.code === 'ECONNABORTED' || error.message === 'Network Error') {
+              setError('Network error: Could not connect to the server. Please try again.');
+            } else if (error.response) {
+              setError(error.response.data.error || 'Server error occurred');
+            } else if (error.request) {
+              setError('No response from server. Please check your connection.');
+            } else {
+              setError(error.message);
+            }
             return;
           }
         }
-        navigate('/'); // Navigate to home page after successful login/signup
       }
-      else{
+      else {
         setError('Email domain is invalid')
       }
-      } catch (error) {
-        setError(error.message);
-      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      setError(error.message);
+    }
   };
 
   return (
-    
     <div className="login-container">
       <div className="login-box">
         <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
@@ -101,10 +128,10 @@ function Login() {
           <button
             className="toggle-button"
             onClick={() => setIsLogin(!isLogin)}
-            >
+          >
             {isLogin ? 'Sign Up' : 'Login'}
           </button>
-        </p> 
+        </p>
       </div>
     </div>
   );

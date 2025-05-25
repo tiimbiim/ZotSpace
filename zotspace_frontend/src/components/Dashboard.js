@@ -7,7 +7,7 @@ import './Dashboard.css';
 import CourseSchedule from './widgets/CourseSchedule';
 import Requirements from './widgets/Requirements';
 import DifficultyMeter from './widgets/DifficultyMeter';
-import TodoList from './widgets/TodoList';
+import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
 import CalendarWidget from './widgets/Calendar';
 
