@@ -67,6 +67,10 @@ const StudyRooms = () => {
     return locationMatch && capacityMatch && techMatch;
   });
 
+  const getThreeRooms = () => {
+    return filteredSpaces.slice(0, 3);
+  };
+
   return (
     <div className="study-rooms-widget">
       <div className="filters-section">
@@ -113,7 +117,7 @@ const StudyRooms = () => {
       </div>
 
       <div className="study-rooms-grid">
-        {filteredSpaces.map(space => (
+        {getThreeRooms().map(space => (
           <div key={space.id} className="study-room-card">
             <div className="room-header">
               <h3>{space.name}</h3>
