@@ -294,6 +294,15 @@
   padding: 1rem;
 }
 
+.study-rooms-widget h2 {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.study-rooms-widget h2:hover {
+  color: #4CAF50;
+}
+
 .filters-section {
   display: flex;
   gap: 1rem;

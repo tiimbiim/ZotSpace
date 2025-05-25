@@ -1,0 +1,328 @@
+.study-spaces-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: url('../assets/nav_background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.study-spaces-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.header-content {
+  width: 100%;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #1565c0;
+}
+
+.study-spaces-header h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.study-spaces-header p {
+  color: white;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  background: #4CAF50;
+  color: white;
+}
+
+.study-spaces-content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Filters Section */
+.filters-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.filter-group label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.filter-select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: white;
+}
+
+/* Spaces Grid */
+.spaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.space-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.space-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.space-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.space-info {
+  margin: 1rem 0;
+}
+
+.space-location, .space-capacity {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.tech-enhanced {
+  color: #2196F3;
+  font-weight: 500;
+  margin: 0.5rem 0;
+}
+
+.space-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 1rem 0;
+}
+
+.available-slots {
+  margin: 1rem 0;
+}
+
+.available-slots h4 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.time-slot {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  margin: 0.25rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.space-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.feature-tag {
+  padding: 0.25rem 0.5rem;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* Groups Section */
+.groups-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.groups-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.create-group-btn {
+  padding: 0.75rem 1.5rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-group-btn:hover {
+  background: #45a049;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.group-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.group-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.course-tag {
+  padding: 0.25rem 0.5rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.group-info {
+  margin: 1rem 0;
+}
+
+.group-info p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.group-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 1rem 0;
+}
+
+.group-actions {
+  margin-top: 1rem;
+}
+
+.join-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.join-btn:hover {
+  background: #45a049;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .study-spaces-page {
+    padding: 1rem;
+  }
+
+  .study-spaces-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back-button {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab {
+    width: 100%;
+  }
+
+  .filters-section {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .spaces-grid,
+  .groups-grid {
+    grid-template-columns: 1fr;
+  }
+} 

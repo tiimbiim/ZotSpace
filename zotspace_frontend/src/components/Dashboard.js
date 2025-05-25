@@ -28,6 +28,10 @@ const Dashboard = () => {
     navigate('/course-schedule');
   };
 
+  const handleStudySpacesClick = () => {
+    navigate('/study-spaces');
+  };
+
   return (
     <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
@@ -52,7 +56,7 @@ const Dashboard = () => {
         <div className="widget study-timer">
           <StudyTimer />
         </div>
-        <div className="widget study-rooms">
+        <div className="widget study-rooms" onClick={handleStudySpacesClick} style={{ cursor: 'pointer' }}>
           <StudyRooms />
         </div>
       </div>

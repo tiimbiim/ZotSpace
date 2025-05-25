@@ -8,6 +8,7 @@ import Schedule from './pages/Schedule';
 import StudyGroup from './pages/StudyGroup';
 import CourseSched from './pages/CourseSched';
 import TodoPage from './pages/TodoPage';
+import StudySpaces from './pages/StudySpaces';
 import axios from 'axios';
 
 import Dashboard from './components/Dashboard.js';
@@ -133,6 +134,14 @@ function App() {
           element={
             <ProtectedRoute>
               <StudyGroup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/study-spaces"
+          element={
+            <ProtectedRoute>
+              <StudySpaces />
             </ProtectedRoute>
           }
         />

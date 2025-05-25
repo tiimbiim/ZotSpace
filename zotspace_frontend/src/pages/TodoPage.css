@@ -2,7 +2,9 @@
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  position: relative;
+  min-height: 100vh;
+  background: url('../assets/nav_background.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .header {
@@ -31,17 +33,17 @@
 }
 
 .header h1 {
-  margin-bottom: 2rem;
-  font-size: 2.35rem;
-  color: #333;
-  font-weight: 570;
+  color: white;
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .todo-container {
-  background: white;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -55,6 +57,7 @@
   }
   
   .back-button {
+    position: relative;
     margin-bottom: 1rem;
   }
 } 

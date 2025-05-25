@@ -69,7 +69,7 @@ const StudyRooms = () => {
 
   return (
     <div className="study-rooms-widget">
-      <h2>Study Spaces</h2>
+      <h2>Study Spaces & Groups</h2>
       
       <div className="filters-section">
         <div className="filter-group">
@@ -126,7 +126,6 @@ const StudyRooms = () => {
               {space.techEnhanced && (
                 <p className="tech-enhanced">✓ Tech Enhanced</p>
               )}
-              <p className="room-description">{space.description}</p>
             </div>
             <div className="available-slots">
               <h4>Available Time Slots:</h4>
