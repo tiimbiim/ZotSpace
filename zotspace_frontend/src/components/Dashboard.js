@@ -27,6 +27,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <button className="logout-button" onClick={handleLogout}>Logout</button>
       <h1>ZotSpace Dashboard</h1>
+      <h2 className="subtitle">Organize your world, the <i>ZOT</i> way. </h2>
       <div className="dashboard-grid">
         <div className="widget course-schedule">
           <CourseSchedule />

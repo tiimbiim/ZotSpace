@@ -12,6 +12,13 @@
   font-weight: 600;
 }
 
+.dashboard .subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
 .logout-button {
   position: absolute;
   top: 2rem;
