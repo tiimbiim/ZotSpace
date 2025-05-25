@@ -3,10 +3,17 @@
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-blend-mode: soft-light;
 }
 
 .dashboard h1 {
-  color: #333;
+  color: #fff;
   margin-bottom: 2rem;
   font-size: 2.5rem;
   font-weight: 600;
@@ -14,7 +21,7 @@
 
 .dashboard .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: #fff;
   margin-bottom: 2rem;
   font-weight: 400;
 }
@@ -107,6 +114,12 @@
 
 .study-rooms {
   grid-column: span 3;
+}
+
+.widget.study-timer {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1024px) {

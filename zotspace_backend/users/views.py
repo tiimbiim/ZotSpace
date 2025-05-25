@@ -154,10 +154,15 @@ def create_user(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        # Extract net_id from email
+        net_id = email.split('@')[0]
+
         # Create the user
         user = User.objects.create_user(
+            username=net_id,  # Use net_id as username
             email=email,
-            password=password
+            password=password,
+            net_id=net_id
         )
 
         serializer = UserSerializer(user)
