@@ -11,7 +11,7 @@ import TodoList from './widgets/ToDoList';
 import StudyRooms from './widgets/StudyRooms';
 import StudyTimer from './widgets/StudyTimer';
 import ScheduleContainer from './widgets/ScheduleContainer';
-import backgroundImage from '../assets/dash_background.png';
+import backgroundImage from '../assets/nl/dash_background.jpg';
 
 const Dashboard = () => {
   const navigate = useNavigate();

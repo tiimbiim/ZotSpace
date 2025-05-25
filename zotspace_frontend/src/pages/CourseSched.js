@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CourseSched.css';
-import backgroundImage from '../assets/nav_background.png';
+import backgroundImage from '../assets/nl/nav_background.jpg';
 import { auth } from '../firebase.config';
 import axios from 'axios'
 

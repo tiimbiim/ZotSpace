@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StudySpaces.css';
-import backgroundImage from '../assets/nav_background.png';
+import backgroundImage from '../assets/nl/nav_background.jpg';
 
 const StudySpaces = () => {
   const navigate = useNavigate();
