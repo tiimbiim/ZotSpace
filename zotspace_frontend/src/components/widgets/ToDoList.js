@@ -10,6 +10,7 @@ const TodoList = () => {
 
   const [newTask, setNewTask] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 
   const categories = ['All', 'Assignments', 'Exams', 'Other'];
 
@@ -22,7 +23,7 @@ const TodoList = () => {
       text: newTask,
       completed: false,
       category: selectedCategory === 'All' ? 'Other' : selectedCategory,
-      dueDate: new Date().toISOString().split('T')[0]
+      dueDate: selectedDate
     };
 
     setTasks([...tasks, task]);
@@ -39,9 +40,17 @@ const TodoList = () => {
     setTasks(tasks.filter(task => task.id !== id));
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const filteredTasks = selectedCategory === 'All'
     ? tasks
     : tasks.filter(task => task.category === selectedCategory);
+
+  // Sort tasks by due date
+  const sortedTasks = [...filteredTasks].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
   return (
     <div className="todo-list-widget">
@@ -64,6 +73,13 @@ const TodoList = () => {
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="date-input"
+            min={new Date().toISOString().split('T')[0]}
+          />
           <button type="submit" className="add-button">Add</button>
         </form>
       </div>
@@ -79,7 +95,7 @@ const TodoList = () => {
         ))}
       </div>
       <div className="tasks-list">
-        {filteredTasks.map(task => (
+        {sortedTasks.map(task => (
           <div key={task.id} className={`task-item ${task.completed ? 'completed' : ''}`}>
             <div className="task-content">
               <input
@@ -89,7 +105,7 @@ const TodoList = () => {
               />
               <span className="task-text">{task.text}</span>
               <span className="task-category">{task.category}</span>
-              <span className="task-due-date">{task.dueDate}</span>
+              <span className="task-due-date">{formatDate(task.dueDate)}</span>
             </div>
             <button
               className="delete-button"

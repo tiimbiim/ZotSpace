@@ -159,6 +159,16 @@
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  min-width: 120px;
+}
+
+.date-input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 140px;
 }
 
 .add-button {
@@ -215,6 +225,21 @@
 .task-category, .task-due-date {
   font-size: 0.9rem;
   color: #666;
+  padding: 0.25rem 0.5rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.task-due-date {
+  color: #2196F3;
+  background: #E3F2FD;
+}
+
+.task-item.completed .task-due-date {
+  color: #4CAF50;
+  background: #E8F5E9;
 }
 
 .delete-button {
@@ -309,16 +334,26 @@
   
   .add-task-form {
     flex-direction: column;
+    gap: 0.75rem;
   }
   
-  .category-filters {
-    flex-direction: column;
+  .task-input,
+  .category-select,
+  .date-input,
+  .add-button {
+    width: 100%;
   }
   
   .task-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+  
+  .task-category,
+  .task-due-date {
+    font-size: 0.8rem;
+    margin-left: 2rem;
   }
 }
 
