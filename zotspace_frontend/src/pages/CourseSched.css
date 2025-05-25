@@ -1,3 +1,13 @@
+
+.add-course-form input,
+.add-course-form select {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.add-course-form button:hover {
+  background-color: #357ABD;
+}
 .course-schedule-page {
   padding: 2rem;
   max-width: 1400px;

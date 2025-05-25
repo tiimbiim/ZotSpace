@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CourseSchedule from './CourseSchedule';
+// import CourseSchedule from './CourseSchedule';
+import CourseSched from '../../pages/CourseSched';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import axios from 'axios'
+// import axios from 'axios'
 
 const ScheduleContainer = () => {
   const [courses, setCourses] = useState([]);
@@ -56,7 +57,7 @@ const ScheduleContainer = () => {
 
 
   if (loading) return <div>Loading schedule...</div>;
-  return <CourseSchedule courses={courses} userId={userId}/>;
+  return <CourseSched courses={courses} userId={userId}/>;
 };
 
 export default ScheduleContainer;
