@@ -6,7 +6,6 @@
   background-color: #f5f5f5;
   background-image: url('../../public/space_home.jpg');
   background-size: cover;
-
 }
 
 .login-box {
@@ -23,6 +22,37 @@
   src: url('../../public/Rubik-Regular.woff2');
 }
 
+.logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-text {
+  font-size: 3rem;
+  color: #282c34;
+  margin: 0;
+  font-family: "Rubik";
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-tagline {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+  font-family: "Rubik";
+  font-style: italic;
+}
+
+.form-title {
+  text-align: center;
+  color: #282c34;
+  margin-bottom: 1.5rem;
+  font-family: "Rubik";
+  font-size: 1.5rem;
+}
+
 .login-box h1 {
   text-align: center;
   color: #282c34;
@@ -33,6 +63,8 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+  width: 80%;
+  margin: 0 auto 1.5rem auto;
 }
 
 .form-group label {
@@ -41,20 +73,23 @@
   color: #333;
   font-weight: bold;
   font-family: "Rubik";
+  text-align: left;
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
   font-family: "Rubik";
+  height: 45px;
+  box-sizing: border-box;
 }
 
 .submit-button {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.8rem;
   background-color: #61dafb;
   color: #282c34;
   border: none;
@@ -64,10 +99,18 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: "Rubik";
+  height: 45px;
+  box-sizing: border-box;
 }
 
 .submit-button:hover {
   background-color: #4fa8c7;
+}
+
+/* Add a container for the submit button to match form-group width */
+.submit-button-container {
+  width: 80%;
+  margin: 0 auto;
 }
 
 .error-message {
@@ -96,4 +139,11 @@
 
 .toggle-button:hover {
   text-decoration: underline;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 } 

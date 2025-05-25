@@ -96,7 +96,11 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+        <div className="logo">
+          <h1 className="logo-text">ZotSpace</h1>
+          <p className="logo-tagline">Your UCI Study Space</p>
+        </div>
+        <h2 className="form-title">{isLogin ? 'Login' : 'Sign Up'}</h2>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -119,9 +123,11 @@ function Login() {
               required
             />
           </div>
-          <button type="submit" className="submit-button">
-            {isLogin ? 'Login' : 'Sign Up'}
-          </button>
+          <div className="submit-button-container">
+            <button type="submit" className="submit-button">
+              {isLogin ? 'Login' : 'Sign Up'}
+            </button>
+          </div>
         </form>
         <p className="toggle-text">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
