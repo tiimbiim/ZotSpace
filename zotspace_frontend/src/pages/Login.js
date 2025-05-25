@@ -98,7 +98,7 @@ function Login() {
       <div className="login-box">
         <div className="logo">
           <h1 className="logo-text">ZotSpace</h1>
-          <p className="logo-tagline">Your UCI Study Space</p>
+          <p className="logo-tagline">Access Your UCI Universe.</p>
         </div>
         <h2 className="form-title">{isLogin ? 'Login' : 'Sign Up'}</h2>
         {error && <p className="error-message">{error}</p>}
