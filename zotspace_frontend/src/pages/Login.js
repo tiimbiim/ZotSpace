@@ -1,32 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase.config.js';
 import './Login.css';
+import axios from 'axios';
+
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
+  const [validEmail, setValidEmail] = useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    let ve = email.includes("@uci.edu")
+    // console.log(email, email.includes("uci.edu"), ve)
+
+    if (ve) {
+      setValidEmail(true)
+    }
+    else {
+      setValidEmail(false)
+    }
+
+
 
     try {
-      if (isLogin) {
-        // Sign in
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        // Sign up
-        await createUserWithEmailAndPassword(auth, email, password);
+      // alert(ve)
+      if (ve) {
+        if (isLogin) {
+          // Sign in
+          await signInWithEmailAndPassword(auth, email, password);
+          
+        } else {
+          // Sign up
+          await createUserWithEmailAndPassword(auth, email, password);
+
+          const options = {method: 'POST', url: 'http://localhost:8000/api/users/create/'};
+          let api_resp = null
+          try {
+            const { resp } = await axios.post(options, {email: email, password: password});
+            api_resp = resp
+            console.log(resp);
+          } catch (error) {
+            console.error('api:', error);
+}
+
+        }
+        navigate('/'); // Navigate to home page after successful login/signup
       }
-      navigate('/'); // Navigate to home page after successful login/signup
-    } catch (error) {
-      setError(error.message);
-    }
+      else{
+        setError('Email domain is invalid')
+      }
+      } catch (error) {
+        setError(error.message);
+      }
   };
 
   return (
@@ -65,10 +98,10 @@ function Login() {
           <button
             className="toggle-button"
             onClick={() => setIsLogin(!isLogin)}
-          >
+            >
             {isLogin ? 'Sign Up' : 'Login'}
           </button>
-        </p>
+        </p> 
       </div>
     </div>
   );

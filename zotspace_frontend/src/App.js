@@ -12,17 +12,6 @@ import Dashboard from './components/Dashboard.js';
 
 // const axios = require('axios').default;
 
-const options = {method: 'GET', url: 'https://anteaterapi.com/v2/rest/studyRooms'};
-let api_data = null;
-try {
-  const { data } = await axios.request(options);
-  api_data = data;
-  console.log(api_data)
-
-} catch (error) {
-  console.error(error);
-}
-
 // Protected Route component
 function ProtectedRoute({ children }) {
   const [user, setUser] = useState(null);
