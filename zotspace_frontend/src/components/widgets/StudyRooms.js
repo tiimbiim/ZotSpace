@@ -1,73 +1,143 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Widgets.css';
 
 const StudyRooms = () => {
-  // Sample study room data
-  const studyRooms = [
+  const [selectedLocation, setSelectedLocation] = useState('all');
+  const [selectedCapacity, setSelectedCapacity] = useState('all');
+  const [techEnhanced, setTechEnhanced] = useState('all');
+
+  const locations = [
+    'Langson Library',
+    'Gateway Study Center',
+    'Science Library',
+    'Multimedia Resources Center'
+  ];
+
+  const capacityOptions = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  const studySpaces = [
     {
-      id: 1,
-      name: 'Langson Library',
-      occupancy: 75,
-      features: ['Quiet Zone', 'Power Outlets', 'Wi-Fi'],
-      availableHours: '8:00 AM - 11:00 PM'
+      id: "102070",
+      name: "Science 176",
+      location: "Multimedia Resources Center",
+      capacity: 2,
+      techEnhanced: false,
+      features: ['iMac Desktop', '4K display', 'HDMI Connection', 'Lecture-style seats', 'Podium'],
+      availableSlots: [
+        { start: "1:00 PM", end: "1:30 PM" },
+        { start: "1:30 PM", end: "2:00 PM" },
+        { start: "2:00 PM", end: "2:30 PM" }
+      ]
     },
     {
-      id: 2,
-      name: 'Science Library',
-      occupancy: 45,
-      features: ['Group Study', 'Whiteboards', 'Wi-Fi'],
-      availableHours: '7:00 AM - 10:00 PM'
+      id: "178734",
+      name: "Study Pod 2B",
+      location: "Science Library",
+      capacity: 1,
+      techEnhanced: false,
+      features: [''],
+      availableSlots: [
+        { start: "1:00 PM", end: "1:30 PM" },
+        { start: "1:30 PM", end: "2:00 PM" },
+        { start: "2:00 PM", end: "2:30 PM" }
+      ]
     },
     {
-      id: 3,
-      name: 'Student Center',
-      occupancy: 60,
-      features: ['Cafe Nearby', 'Power Outlets', 'Wi-Fi'],
-      availableHours: '6:00 AM - 12:00 AM'
-    },
-    {
-      id: 4,
-      name: 'Engineering Hall',
-      occupancy: 85,
-      features: ['Computer Lab', 'Power Outlets', 'Wi-Fi'],
-      availableHours: '7:00 AM - 9:00 PM'
+      id: "44697",
+      name: "Langson 382",
+      location: "Langson Library",
+      capacity: 6,
+      techEnhanced: false,
+      features: [''],
+      availableSlots: [
+        { start: "1:00 PM", end: "1:30 PM" },
+        { start: "1:30 PM", end: "2:00 PM" },
+        { start: "2:00 PM", end: "2:30 PM" }
+      ]
     }
   ];
 
-  // Get 3 study rooms based on availability
-  const getThreeRooms = () => {
-    return [...studyRooms]
-      .slice(0, 3);
-  };
+  const filteredSpaces = studySpaces.filter(space => {
+    const locationMatch = selectedLocation === 'all' || space.location === selectedLocation;
+    const capacityMatch = selectedCapacity === 'all' || space.capacity === parseInt(selectedCapacity);
+    const techMatch = techEnhanced === 'all' || 
+      (techEnhanced === 'yes' && space.techEnhanced) || 
+      (techEnhanced === 'no' && !space.techEnhanced);
+    
+    return locationMatch && capacityMatch && techMatch;
+  });
 
   return (
     <div className="study-rooms-widget">
       <h2>Study Spaces</h2>
+      
+      <div className="filters-section">
+        <div className="filter-group">
+          <label>Location:</label>
+          <select 
+            value={selectedLocation} 
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">All Locations</option>
+            {locations.map(loc => (
+              <option key={loc} value={loc}>{loc}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-group">
+          <label>Capacity:</label>
+          <select 
+            value={selectedCapacity} 
+            onChange={(e) => setSelectedCapacity(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">Any Capacity</option>
+            {capacityOptions.map(cap => (
+              <option key={cap} value={cap}>{cap} People</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-group">
+          <label>Tech Enhanced:</label>
+          <select 
+            value={techEnhanced} 
+            onChange={(e) => setTechEnhanced(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">All Rooms</option>
+            <option value="yes">Tech Enhanced Only</option>
+            <option value="no">Non-Tech Enhanced Only</option>
+          </select>
+        </div>
+      </div>
+
       <div className="study-rooms-grid">
-        {getThreeRooms().map(room => (
-          <div key={room.id} className="study-room-card">
+        {filteredSpaces.map(space => (
+          <div key={space.id} className="study-room-card">
             <div className="room-header">
-              <h3>{room.name}</h3>
-              <span className="available-hours">{room.availableHours}</span>
+              <h3>{space.name}</h3>
             </div>
-            <div className="occupancy-info">
-              <div className="occupancy-text">
-                <span>Current Occupancy</span>
-                <span>{room.occupancy}%</span>
-              </div>
-              <div className="occupancy-bar">
-                <div 
-                  className="occupancy-fill"
-                  style={{ 
-                    width: `${room.occupancy}%`,
-                    backgroundColor: room.occupancy > 80 ? '#ff4444' : 
-                                   room.occupancy > 60 ? '#ffd700' : '#4CAF50'
-                  }}
-                />
-              </div>
+            <div className="room-info">
+              <p className="room-location">Location: {space.location}</p>
+              <p className="room-capacity">Capacity: {space.capacity} people</p>
+              {space.techEnhanced && (
+                <p className="tech-enhanced">✓ Tech Enhanced</p>
+              )}
+              <p className="room-description">{space.description}</p>
+            </div>
+            <div className="available-slots">
+              <h4>Available Time Slots:</h4>
+              {space.availableSlots.map((slot, index) => (
+                <div key={index} className="time-slot">
+                  {slot.start} - {slot.end}
+                </div>
+              ))}
             </div>
             <div className="room-features">
-              {room.features.map((feature, index) => (
+              {space.features.map((feature, index) => (
                 <span key={index} className="feature-tag">{feature}</span>
               ))}
             </div>
