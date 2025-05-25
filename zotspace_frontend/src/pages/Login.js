@@ -41,16 +41,19 @@ function Login() {
           // Sign up
           await createUserWithEmailAndPassword(auth, email, password);
 
-          const options = {method: 'POST', url: 'http://localhost:8000/api/users/create/'};
-          let api_resp = null
+          // Create user in Django backend
           try {
-            const { resp } = await axios.post(options, {email: email, password: password});
-            api_resp = resp
-            console.log(resp);
+            const response = await axios.post('http://localhost:8000/api/users/create/', {
+              email: email,
+              password: password
+            });
+            console.log('Backend user created:', response.data);
           } catch (error) {
-            console.error('api:', error);
-}
-
+            console.error('Backend API error:', error.response?.data || error.message);
+            // Optionally handle the error (e.g., show it to the user)
+            setError('Failed to create user in backend: ' + (error.response?.data?.error || error.message));
+            return;
+          }
         }
         navigate('/'); // Navigate to home page after successful login/signup
       }
