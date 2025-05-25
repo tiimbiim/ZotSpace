@@ -54,4 +54,4 @@ const CourseSchedule = () => {
   );
 };
 
-export default CourseSchedule; 
+export default CourseSchedule;
