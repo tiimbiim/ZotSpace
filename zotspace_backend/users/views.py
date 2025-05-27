@@ -67,6 +67,10 @@ def add_course(request, user_id):
     try:
         user = User.objects.get(id=user_id)
         course_id = request.data.get('course_id')
+        day = request.data.get('day')
+        s_time = request.data.get('start_time')
+        e_time = request.data.get('end_time')
+        prof = request.data.get('prof')
         
         if not course_id:
             return Response(
@@ -81,21 +85,39 @@ def add_course(request, user_id):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        if course_id not in user.courses:
-            user.courses.append(course_id)
+        full_course = [course_id, day, s_time, e_time, prof]
+
+        if not user.courses:
+            user.courses.append(full_course)
             user.save()
             return Response({
                 'message': 'Course added successfully',
                 'course_id': course_id,
                 'updated_courses': user.courses
             })
-        else:
-            return Response({
-                'message': 'Course already exists in user\'s list',
-                'course_id': course_id,
-                'courses': user.courses
-            })
-            
+        print('fc', full_course)
+        for i, course in enumerate(user.courses):
+            print(course)
+            if course_id == course[0]:  # assuming course_id is at index 0 in each course list
+                print(1, user.courses[i])
+                user.courses[i] = full_course
+                print(2, user.courses[i])
+                user.save()
+                return Response({
+                    'message': 'Course already exists - updated',
+                    'course_id': course_id,
+                    'courses': user.courses
+                })
+
+        # If course_id not found, append new course
+        user.courses.append(full_course)
+        user.save()
+        return Response({
+            'message': 'Course added successfully',
+            'course_id': course_id,
+            'updated_courses': user.courses
+        })
+
     except User.DoesNotExist:
         return Response(
             {'error': 'User not found'},
