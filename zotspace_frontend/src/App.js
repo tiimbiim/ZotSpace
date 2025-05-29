@@ -14,6 +14,7 @@ import JoinGroupConfirmation from './pages/JoinGroupConfirmation';
 import axios from 'axios';
 
 import Dashboard from './components/Dashboard.js';
+import DifficultyDetails from './pages/DifficultyDetails.js';
 
 // const axios = require('axios').default;
 
@@ -149,6 +150,7 @@ function App() {
         />
         <Route path="/join-group-confirmation" element={<JoinGroupConfirmation />} />
         <Route path="/create-group" element={<CreateGroupForm />} />
+        <Route path="difficulty-details" element={<DifficultyDetails/>}/>
       </Routes>
     </Router>
   );

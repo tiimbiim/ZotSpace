@@ -33,6 +33,10 @@ const Dashboard = () => {
     navigate('/study-spaces');
   };
 
+  const handleDifficultyClick = () => {
+    navigate('/difficulty-details');
+  }
+
   return (
     <div className="dashboard" style={{ backgroundImage: `url(${backgroundImage})`, maxWidth: '100vw'}}>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
@@ -46,7 +50,7 @@ const Dashboard = () => {
           <CourseSchedule />
           {/* <ScheduleContainer /> */}
         </div>
-        <div className="widget difficulty-meter">
+        <div className="widget difficulty-meter" onClick={handleDifficultyClick} style={{cursor: 'pointer'}}>
           <DifficultyMeter />
         </div>
         <div className="widget requirements">
